@@ -8,6 +8,7 @@ def main():
         for j in range(len(B[i])):
             print(B[i][j])
 
+
 def performOps(A):
     m = len(A)
     n = len(A[0])
@@ -17,7 +18,6 @@ def performOps(A):
         for j in range(len(A[i])):
             B[i][n - 1 - j] = A[i][j]
     return B
-
 
 
 if __name__ == "__main__":
