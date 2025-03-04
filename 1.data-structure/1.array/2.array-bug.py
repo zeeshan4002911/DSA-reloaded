@@ -1,3 +1,5 @@
+# Rotate the array A by B positions.
+
 class Solution:
     # @param a : list of integers
     # @param b : integer
