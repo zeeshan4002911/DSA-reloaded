@@ -25,16 +25,17 @@ Constraints:
 class Solution:
     def duplicate_with_kth_distance(self, arr, k):
         size = len(arr)
-        for i in range(size):
-            j = i
-            seen = set()
-            # Sliding Window having window length k + 1
-            while j <= i + k and j < size:
-                if arr[j] in seen:
-                    return True
-                seen.add(arr[j])
-                j += 1
-            seen.clear()
+        seen = set()
+        # Sliding Window having window length k + 1
+        for i in range(k + 1):
+            if arr[i] in seen:
+                return True
+            seen.add(arr[i])
+        for i in range(k + 1, size):
+            seen.remove(arr[i - (k + 1)])
+            if arr[i] in seen:
+                return True
+            seen.add(arr[i])
         return False
 
 
