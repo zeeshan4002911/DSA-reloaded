@@ -24,28 +24,26 @@ class Solution:
     def single_element_among_doubles(self, n, arr):
         if n == 0:
             return None
-        elif n == 1:
-            return arr[0]
-        elif n > 1:
-            if arr[0] != arr[1]:
-                return arr[0]
-        result = self.modfied_binary_search(n, arr, 1, n - 1)
-        if result is None and arr[n - 1] != arr[n - 2]:
-            result = arr[n - 1]
-        return result
+        return self.modified_binary_search(n, arr, 0, n - 1)
 
-    def modfied_binary_search(self, n, arr, low, high):
-        if low > high:
-            return None
+    def modified_binary_search(self, n, arr, low, high):
+        if low >= high:
+            return arr[low]
+    
         mid = low + (high - low) // 2
-        if mid + 1 > n - 1 or mid - 1 < 0:
-            return None
-        if arr[mid] != arr[mid - 1] and arr[mid] != arr[mid + 1]:
-            return arr[mid]
-        left_search = self.modfied_binary_search(n, arr, low, mid - 1)
-        right_search = self.modfied_binary_search(n, arr, mid + 1, high)
-        return left_search or right_search or None
 
+        if (mid - 1 >= 0 and mid + 1 <= n - 1 and  arr[mid] != arr[mid + 1] and arr[mid] != arr[mid - 1]):
+            return arr[mid] 
+        elif (mid % 2 == 1 and arr[mid] == arr[mid-1]) or (mid % 2 == 0 and arr[mid] == arr[mid+1]):
+            """
+            In a sorted array where all elements appear exactly twice except one, the unique element will be at the position where the pairing breaks.
+            If mid is even and arr[mid] == arr[mid + 1], the unique element is in the right half.
+            If mid is odd and arr[mid] == arr[mid - 1], the unique element is in the right half.
+            Otherwise, it's in the left half.
+            """
+            return self.modified_binary_search(n, arr, mid + 1, high)
+        else:
+            return self.modified_binary_search(n, arr, low, mid - 1)
 
 def main():
     n = int(input())
