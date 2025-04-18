@@ -1,7 +1,5 @@
-"""
-
+"""z
 Stable Binary Sort
-Last Updated : 09 Nov, 2024
 
 Given an array arr[] of integers, the task is to partition the array based on even and odd elements. The partition has to be stable, meaning the relative ordering of all even elements must remain the same before and after partitioning, and the same should hold true for all odd elements.
 
