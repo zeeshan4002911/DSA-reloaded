@@ -16,6 +16,12 @@
      - Expands or contracts the window to meet specific conditions (e.g., longest substring without repeating characters).
      - Often combined with hashmaps.
 
+4. Modfied Merge Sort ->
+     - Parallel scaning of multi data to merge in specific pattern
+     - Often used to sort or arranging in specific pattern in O(n log n) time complextiy
+     - Example: Find intersection and union of sorted arrays
+
+
 ## Nonlinear Data Structure Patterns ##
 
 1. Binary Tree BFS ->
