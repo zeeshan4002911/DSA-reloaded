@@ -30,6 +30,7 @@ Auxiliary Space: O(1)
 
 
 class Solution:
+    # Recursive approach
     def modified_binary_search(self, arr, x):
         size = len(arr)
         result = -1
@@ -46,6 +47,24 @@ class Solution:
             return self.helper(arr, low, mid - 1, target, mid)
         else:
             return self.helper(arr, mid + 1, high, target, result)
+
+    # Iterative approach and similar to in-built bisect_left method of python
+    def ceilSearch(arr, x):
+        low = 0
+        high = len(arr) - 1
+        result = -1
+
+        while low <= high:
+            mid = low + (high - low) // 2
+
+            if arr[mid] < x:
+                low = mid + 1
+            else:
+                # Possible answer, but check if there's a smaller index
+                result = mid
+                high = mid - 1
+
+        return result
 
 
 def main():
