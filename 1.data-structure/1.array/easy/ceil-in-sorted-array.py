@@ -31,12 +31,12 @@ Auxiliary Space: O(1)
 
 class Solution:
     # Recursive approach
-    def modified_binary_search(self, arr, x):
+    def ceil_in_sorted_array(self, arr, x):
         size = len(arr)
         result = -1
-        return self.helper(arr, 0, size - 1, x, result)
+        return self.modified_binary_search(arr, 0, size - 1, x, result)
 
-    def helper(self, arr, low, high, target, result):
+    def modified_binary_search(self, arr, low, high, target, result):
         if low > high:
             return result
 
@@ -44,9 +44,9 @@ class Solution:
 
         if arr[mid] >= target:
             # Possible answer, but check if there's a smaller index
-            return self.helper(arr, low, mid - 1, target, mid)
+            return self.modified_binary_search(arr, low, mid - 1, target, mid)
         else:
-            return self.helper(arr, mid + 1, high, target, result)
+            return self.modified_binary_search(arr, mid + 1, high, target, result)
 
     # Iterative approach and similar to in-built bisect_left method of python
     def ceilSearch(arr, x):
