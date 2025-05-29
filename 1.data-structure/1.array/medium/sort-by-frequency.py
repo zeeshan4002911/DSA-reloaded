@@ -12,8 +12,9 @@ Output: [9, 9, 9, 2, 5]
 Explanation: The highest frequency here is 3. Element 9 has the highest frequency So 9 9 9 comes first. Now both 2 and 5 have the same frequency. So we print smaller elements first. The output is 9 9 9 2 5.
 
 Constraints:
-1 ≤ arr.size() ≤ 105
-1 ≤ arr[i]≤ 105
+1 ≤ arr.size() ≤ 10^5
+1 ≤ arr[i]≤ 10^5
+
 Expected Complexities
 Time Complexity: O(n log n)
 Auxiliary Space: O(n)
