@@ -20,6 +20,9 @@ Time Complexity: O(n log n)
 Auxiliary Space: O(n)
 """
 
+from collections import Counter
+import heapq
+
 
 class Solution:
     def sort_by_frequency(self, arr):
@@ -27,7 +30,7 @@ class Solution:
         arr.sort()
         # Matrix for storing frequency of element in [frequency, element] format
         mat: list[list[int, int]] = []
-        
+
         # Count of frequency/occurence and insertion in matrix for recording
         count = 1
         for i in range(size - 1):
@@ -37,10 +40,10 @@ class Solution:
                 mat.append([count, arr[i]])
                 count = 1
         mat.append([count, arr[size - 1]])
-        
+
         # Sort in descending based on frequency
         mat.sort(key=lambda x: x[0], reverse=True)
-        
+
         # write back elements based on frequency in original array
         k = 0
         for i in range(len(mat)):
@@ -50,6 +53,19 @@ class Solution:
                 k += 1
                 count -= 1
         return arr
+
+    # Using heap data strucute (max heap)
+    def sort_by_frequency_heap(self, arr):
+        freq = Counter(arr)
+        # storing negative for max heap as heapq is by default min heap
+        heap = [(-count, num) for num, count in freq.items()]
+        heapq.heapify(heap)
+
+        result = []
+        while heap:
+            count, num = heapq.heappop(heap)
+            result.extend([num] * -count)
+        return result
 
 
 def main():
