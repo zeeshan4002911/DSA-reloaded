@@ -21,6 +21,7 @@ Constraints:
 
 
 class Solution:
+    # TC: O(k^2*Log(k ^ 2)), SC: O(k^2)
     def merge_k_sorted_arrays(self, mat, k):
         rows = cols = k
         flatten_mat = []
