@@ -26,7 +26,7 @@ Auxiliary Space: O(n)
 
 
 class Solution:
-    def check_subset(self, arr_main, arr_sub):
+    def check_array_subset(self, arr_main, arr_sub):
         hash_map = {}
         for ele in arr_main:
             # Storing the count of element of main array using dict getter with default value 0
@@ -44,7 +44,7 @@ def main():
     arr_main = input().strip().split()
     arr_sub = input().strip().split()
     solution = Solution()
-    print(solution.check_subset(arr_main, arr_sub))
+    print(solution.check_array_subset(arr_main, arr_sub))
 
 
 if __name__ == "__main__":
