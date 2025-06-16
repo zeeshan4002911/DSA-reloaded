@@ -30,8 +30,8 @@ class Solution:
         sum_counter = 0
         seen_map = dict()
         for ele in arr:
-            pos_complement_num = ele + target
-            neg_complement_num = ele - target
+            pos_complement_num = ele - target
+            neg_complement_num = ele + target
             # Due to absolute value, difference of pairs (target) can be positive or negative
             if pos_complement_num in seen_map:
                 sum_counter += seen_map[pos_complement_num]
