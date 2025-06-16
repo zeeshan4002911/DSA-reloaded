@@ -46,7 +46,7 @@ class Solution:
             else:
                 i += 1
         return False
-    
+
     def two_pair_diff_using_binary_search(self, arr, x):
         """
         Sort the array and then for each element binary search of compliment (x - element) in remaining right portion,
@@ -75,6 +75,16 @@ class Solution:
             return self.binary_search(arr, mid + 1, high, target)
         else:
             return True
+
+    def two_pair_diff_using_hashing(self, arr, x):
+        seen = set()
+        for ele in arr:
+            pos_complement_num = ele - x
+            neg_complement_num = ele + x
+            if pos_complement_num in seen or neg_complement_num in seen:
+                return True
+            seen.add(ele)
+        return False
 
 
 def main():
