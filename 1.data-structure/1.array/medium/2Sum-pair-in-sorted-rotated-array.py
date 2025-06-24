@@ -27,6 +27,31 @@ Auxiliary Space: O(1)
 
 
 class Solution:
+    def pair_in_sorted_rotated_array_modified(self, arr, target):
+        size = len(arr)
+        pivot = 0
+        for i in range(1, size):
+            if arr[i] < arr[i - 1]:
+                pivot = i
+                break
+        
+        # The largest number will be the element before pivot
+        # Note: Modulo of size is for getting the correct index in case of rotated array
+        right = (pivot - 1) % size
+        # The smallest number will be the pivot element
+        left = pivot
+        while left != right:
+            current_sum = arr[left] + arr[right]
+            if current_sum == target:
+                return True
+            elif current_sum < target:
+                # Increment of left by 1
+                left = (left + 1) % size
+            else:
+                # Decrement of right by 1
+                right = (right - 1) % size
+        return False
+
     def pair_in_sorted_rotated_array(self, arr, target):
         size = len(arr)
         pivot = 0
@@ -64,7 +89,7 @@ def main():
     arr = list(map(int, input().strip().split()))
     target = int(input("Enter target sum: "))
     solution = Solution()
-    print(solution.pair_in_sorted_rotated_array(arr, target))
+    print(solution.pair_in_sorted_rotated_array_modified(arr, target))
 
 
 if __name__ == "__main__":
