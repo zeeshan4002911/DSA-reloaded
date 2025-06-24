@@ -39,6 +39,19 @@ class Solution:
                 return True
             hash_set.add(ele)
         return False
+    
+    def two_sum_pair_with_given_sum_using_pointers(self, arr, target):
+        arr.sort()
+        left, right = 0, len(arr) - 1
+        while left < right:
+            current_sum = arr[left] + arr[right]
+            if current_sum == target:
+                return True
+            elif current_sum < target:
+                left += 1
+            else:
+                right -= 1
+        return False
 
 
 def main():
