@@ -28,7 +28,7 @@ Auxiliary Space: O(1)
 
 
 class Solution:
-    def two_pair_with_closest_sum(self, arr, target):
+    def two_sum_pair_with_closest_sum(self, arr, target):
         arr.sort()
         left, right = 0, len(arr) - 1
         closness = float("inf")
@@ -58,7 +58,7 @@ def main():
     arr = [int(value) for value in input().strip().split()]
     target = int(input("Enter the value of target: "))
     solution = Solution()
-    print(solution.two_pair_with_closest_sum(arr, target))
+    print(solution.two_sum_pair_with_closest_sum(arr, target))
 
 
 if __name__ == "__main__":
