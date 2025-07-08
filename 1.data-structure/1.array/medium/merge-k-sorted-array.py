@@ -19,6 +19,8 @@ Constraints:
 1 <= k <= 100
 """
 
+import heapq
+
 
 class Solution:
     # TC: O(k^2*Log(k ^ 2)), SC: O(k^2)
@@ -30,6 +32,26 @@ class Solution:
                 flatten_mat.append(mat[i][j])
         flatten_mat.sort()
         return flatten_mat
+
+    # TC: O(k^2*Log(k)), SC: O(k)
+    def merge_k_sorted_arrays_using_min_heap(self, mat, k):
+        result = []
+        min_heap = []
+        heapq.heapify(min_heap)
+
+        # Insert of all array's first element into heap
+        for i in range(k):
+            heapq.heappush(min_heap, (mat[i][0], i, 0))
+
+        while min_heap:
+            # Pop of root element (min element from all the arrays)
+            val, row, col = heapq.heappop(min_heap)
+            result.append(val)
+            # Push the next element (Next in row of popped element) if exists
+            if col + 1 < k:
+                heapq.heappush(min_heap, (mat[row][col + 1], row, col + 1))
+
+        return result
 
 
 def main():
