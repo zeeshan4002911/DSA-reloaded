@@ -15,6 +15,9 @@
      - Refines two pointers to manage a window of elements dynamically.
      - Expands or contracts the window to meet specific conditions (e.g., longest substring without repeating characters).
      - Often combined with hashmaps.
+     - Two types sliding window questions with
+       - Fixed window size
+       - Dynamic window size
 
 4. Modfied Merge Sort ->
      - Parallel scaning of multi data to merge in specific pattern
