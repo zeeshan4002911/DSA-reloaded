@@ -22,6 +22,12 @@ class Solution:
     def length_of_string(self, s):
         return len(s)
 
+    def calculate_length_of_string(self, s):
+        length = 0
+        for _ in s:
+            length += 1
+        return length
+
 
 def main():
     s = input("Enter the String: ")
