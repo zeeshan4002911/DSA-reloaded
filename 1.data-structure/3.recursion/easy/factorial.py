@@ -27,6 +27,18 @@ class Solution:
 
         return n * self.factorial(n - 1)
 
+    # Tail recursion for better recursive stack management - TCO (Tail call optimization)
+    # Not supported in python
+    def factorial_tail_recursion(self, n):
+        return self.factorial_rec_helper(n, 1)
+
+    def factorial_rec_helper(self, n, result):
+        if n == 1 or n == 0:
+            return result
+        
+        result *= n
+        return self.factorial_rec_helper(n - 1, result)
+
 
 def main():
     while True:
@@ -38,7 +50,7 @@ def main():
             print("Invalid input. Please enter a valid", int.__name__)
 
     solution = Solution()
-    print(solution.factorial(n))
+    print(solution.factorial_tail_recursion(n))
 
 
 if __name__ == "__main__":
