@@ -1,0 +1,43 @@
+"""
+You are given an integer array arr[]. The task is to find the sum of it.
+
+Examples:
+
+Input: arr[] = [1, 2, 3, 4]
+Output: 10
+Explanation: 1 + 2 + 3 + 4 = 10.
+
+Input: arr[] = [1, 3, 3]
+Output: 7
+Explanation: 1 + 3 + 3 = 7.
+
+Constraints:
+1 <= arr.size <= 10^5
+1 <= arr[i] <= 10^4
+
+Expected Complexities
+Time Complexity: O(n)
+Auxiliary Space: O(1)
+"""
+
+
+class Solution:
+    def sum_of_array(self, arr):
+        return self.sum_rec_helper(arr, len(arr), 0, 0)
+
+    def sum_rec_helper(self, arr, n, i, result):
+        if i == n:
+            return result
+
+        result += arr[i]
+        return self.sum_rec_helper(arr, n, i + 1, result)
+
+
+def main():
+    arr = [int(value) for value in input().strip().split()]
+    solution = Solution()
+    print(solution.sum_of_array(arr))
+
+
+if __name__ == "__main__":
+    main()
