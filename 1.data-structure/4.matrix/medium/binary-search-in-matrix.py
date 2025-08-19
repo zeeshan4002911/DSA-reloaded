@@ -34,7 +34,7 @@ class Solution:
         m = len(mat[0])
         high = n * m - 1
 
-        while low < high:
+        while low <= high:
             mid = low + (high - low) // 2
             # Index mapping [row = index / total_col, col = index % total_col]
             row = mid // m
