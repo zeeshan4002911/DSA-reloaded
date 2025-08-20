@@ -63,17 +63,21 @@ class Solution:
         sub_matrix_mark_arr = [0] * 9
 
         for i in range(9):
-            
+
             # starting index pointers for 3 x 3 sub matrix
             p, q = 0, 0
             for j in range(9):
                 row_ele = mat[i][j]
                 if row_ele > 0:
-                    row_mark_arr[row_ele - 1] += 1
+                    if row_mark_arr[row_ele - 1] == 1:
+                        return False
+                    row_mark_arr[row_ele - 1] = 1
 
                 col_ele = mat[j][i]
                 if col_ele > 0:
-                    col_mark_arr[col_ele - 1] += 1
+                    if col_mark_arr[col_ele - 1] == 1:
+                        return False
+                    col_mark_arr[col_ele - 1] = 1
 
                 # Index mapping modified formula
                 r = (i // 3) * 3 + p
@@ -87,30 +91,15 @@ class Solution:
 
                 sub_matrix_ele = mat[r][c]
                 if sub_matrix_ele > 0:
-                    sub_matrix_mark_arr[sub_matrix_ele - 1] += 1
-
-            # Check of presence of 1-9 digits for each row and column of matrix
-            row_col_check_result = (
-                self.check_mark_arr(row_mark_arr)
-                and self.check_mark_arr(col_mark_arr)
-                and self.check_mark_arr(sub_matrix_mark_arr)
-            )
+                    if sub_matrix_mark_arr[sub_matrix_ele - 1] == 1:
+                        return False
+                    sub_matrix_mark_arr[sub_matrix_ele - 1] = 1
 
             # Reset of count array for next row/column iteration
             self.reset_mark_arr(row_mark_arr)
             self.reset_mark_arr(col_mark_arr)
             self.reset_mark_arr(sub_matrix_mark_arr)
 
-            # In case of more than one same digit presence for any row/column
-            if row_col_check_result is False:
-                return False
-
-        return True
-
-    def check_mark_arr(self, count_arr):
-        for count in count_arr:
-            if count > 1:
-                return False
         return True
 
     def reset_mark_arr(self, count_arr):
