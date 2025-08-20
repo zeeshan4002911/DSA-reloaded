@@ -93,7 +93,7 @@ class Solution:
             row_col_check_result = (
                 self.check_mark_arr(row_mark_arr)
                 and self.check_mark_arr(col_mark_arr)
-                # and self.check_mark_arr(sub_matrix_mark_arr)
+                and self.check_mark_arr(sub_matrix_mark_arr)
             )
 
             # Reset of count array for next row/column iteration
