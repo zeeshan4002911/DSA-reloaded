@@ -62,9 +62,9 @@ class Solution:
         col_mark_arr = [0] * 9
         sub_matrix_mark_arr = [0] * 9
 
-        # starting index pointers for 3 x 3 sub matrix
         for i in range(9):
-
+            
+            # starting index pointers for 3 x 3 sub matrix
             p, q = 0, 0
             for j in range(9):
                 row_ele = mat[i][j]
