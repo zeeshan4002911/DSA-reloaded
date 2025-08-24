@@ -46,6 +46,7 @@ class LinkedList:
             if curr.next is not None:
                 print(" -> ", end="")
             curr = curr.next
+        print()
 
     # Return the list of the linked list
     def return_list(self, head=None):
@@ -126,6 +127,32 @@ class LinkedList:
                 curr = curr.next
 
         return head
+
+    # For clear the linked list or reset to initial state
+    def clear_all(self, head=None):
+        curr = head or self.head
+        prev = None
+
+        while curr is not None:
+            if prev is not None:
+                prev.data = None
+                prev.next = None
+            prev = curr
+            curr = curr.next
+
+        if prev is not None:
+            prev.data = None
+            prev.next = None
+
+        if head is not None:
+            head.data = None
+            head.next = None
+        if self.head is not None:
+            self.head.data = None
+            self.head.next = None
+            self.head = None
+
+        return True
 
 
 class Node:
