@@ -98,7 +98,33 @@ class LinkedList:
             # Raise index error exception on position value greater than size of linked list
             else:
                 raise IndexError("Value of pos is out of range")
-            
+
+        return head
+
+    def remove_at(self, head, pos):
+        curr = head
+
+        if curr is None:
+            return curr
+
+        # For the first position (head removal)
+        if pos == 1:
+            head = head.next
+            curr.next = None
+        # For the rest of position
+        else:
+            count = 0
+            prev = None
+            while curr is not None:
+                count += 1
+                if count == pos:
+                    prev.next = curr.next
+                    curr.next = None
+                    break
+
+                prev = curr
+                curr = curr.next
+
         return head
 
 
