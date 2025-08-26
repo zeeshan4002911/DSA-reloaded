@@ -6,20 +6,36 @@ class LinkedList:
         self.head = None
 
     # Create new linked list with a list based data
-    def append_all(self, lst):
+    def append_all(self, lst, pos=None):
         size = len(lst)
         if size < 1:
             return
-
+        if pos is not None and not isinstance(pos, int):
+            return "Value of pos should be number"
+        
         node = Node(lst[0])
         self.head = node
         prev_node = node
+        node_ref = None
+        
+        # Taking reference of node for circular linked list
+        if pos is not None and pos - 1 == 0:
+            node_ref = node
 
         for i in range(1, size):
             node = Node(lst[i])
+            
+            # Taking reference of node for circular linked list
+            if pos is not None and pos - 1 == i:
+                node_ref = node
+            
             prev_node.next = node
             prev_node = node
 
+        # Pointing the tail node to node reference for circular linked list
+        if pos is not None and node_ref is not None:
+            prev_node.next = node_ref
+            
         return self.head
 
     # Add value into the end of linked list
