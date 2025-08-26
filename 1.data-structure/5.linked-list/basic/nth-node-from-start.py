@@ -28,7 +28,7 @@ from linked_list_helper import LinkedList
 
 
 class Solution:
-    def search_key(self, head, index):
+    def nth_node_from_start(self, head, index):
         curr = head
 
         length = 0
@@ -44,13 +44,13 @@ class Solution:
 
 def main():
     arr = [int(value) for value in input("Enter the linked list: ").strip().split()]
-    key = int(input("Enter the number: ").strip())
+    index = int(input("Enter the index form end (1-based): ").strip())
 
     ll = LinkedList()
     head = ll.append_all(arr)
 
     solution = Solution()
-    print(solution.search_key(head, key))
+    print(solution.nth_node_from_start(head, index))
 
 
 if __name__ == "__main__":
