@@ -12,30 +12,30 @@ class LinkedList:
             return
         if pos is not None and not isinstance(pos, int):
             return "Value of pos should be number"
-        
+
         node = Node(lst[0])
         self.head = node
         prev_node = node
         node_ref = None
-        
+
         # Taking reference of node for circular linked list
         if pos is not None and pos - 1 == 0:
             node_ref = node
 
         for i in range(1, size):
             node = Node(lst[i])
-            
+
             # Taking reference of node for circular linked list
             if pos is not None and pos - 1 == i:
                 node_ref = node
-            
+
             prev_node.next = node
             prev_node = node
 
         # Pointing the tail node to node reference for circular linked list
         if pos is not None and node_ref is not None:
             prev_node.next = node_ref
-            
+
         return self.head
 
     # Add value into the end of linked list
@@ -55,13 +55,23 @@ class LinkedList:
         return head or self.head
 
     # Print in pretty format
-    def pretty_print(self, head=None):
+    def pretty_print(self, head=None, pos=None):
         curr = head or self.head
+
+        fast = None
+        if pos is not None and isinstance(pos, int) and pos > 0:
+            fast = head
+
         while curr is not None:
             print(curr.data, end="")
             if curr.next is not None:
                 print(" -> ", end="")
             curr = curr.next
+
+            if fast is not None:
+                fast = fast.next.next
+                if curr == fast:
+                    break
         print()
 
     # Return the list of the linked list
