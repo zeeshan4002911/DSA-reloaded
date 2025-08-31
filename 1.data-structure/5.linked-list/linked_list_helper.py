@@ -181,7 +181,46 @@ class LinkedList:
         return True
 
 
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append_all(self, lst):
+        if lst is None:
+            return None
+
+        head = DNode(lst[0])
+        prev_node_ref = head
+
+        size = len(lst)
+        for i in range(1, size):
+            node = DNode(lst[i])
+
+            # Forward connect of node (prev node -> next to point curr node)
+            prev_node_ref.next = node
+            # Backward connect of node (curr node -> prev to point to prev node)
+            node.prev = prev_node_ref
+            # Cache of curr node to prev node ref
+            prev_node_ref = node
+
+        self.head = head
+        return head
+
+    def pretty_print(self, head=None):
+        curr = head or self.head
+        while curr.next is not None:
+            print(curr.data, "<-> ", end="")
+            curr = curr.next
+        print(curr.data)
+
+
 class Node:
     def __init__(self, data):
         self.data = data
         self.next = None
+
+class DNode:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
