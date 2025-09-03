@@ -47,18 +47,34 @@ class Queue:
         while len(self.queue) > 1:
             ele = self.queue.pop()
             st.append(ele)
-        
+
         # Removal of queue first element
         if len(self.queue):
             result = self.queue.pop()
         else:
             return -1
-        
+
         # Pushing back all the element to main queue
         while len(st) > 0:
             ele = st.pop()
             self.queue.append(ele)
 
+        return result
+
+    def dequeue_rec(self):
+        if not self.queue:
+            return -1
+        
+        # Removing the queue first element
+        if len(self.queue) == 1:
+            return self.queue.pop()
+        
+        # Caching the pop element of queue
+        ele = self.queue.pop()
+        # Recursively calling dequeue until queue size of 1
+        result = self.dequeue()
+        # Appending the cache elements back to queue again
+        self.queue.append(ele)
         return result
 
 
@@ -78,7 +94,7 @@ def main():
                 n -= 1
                 print(solution.queue)
             elif line[0][0] == "d":
-                res = solution.dequeue()
+                res = solution.dequeue_rec()
                 n -= 1
                 result.append(res)
                 print(solution.queue)
