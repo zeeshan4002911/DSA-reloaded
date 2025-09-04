@@ -110,18 +110,13 @@ class TwoStacks:
         self.st2_top_idx -= 2
         self._shrink_array()
         return result
-    
+
     def _shrink_array(self):
         used_space = max(self.st1_top_idx, self.st2_top_idx) + 2
         # Reducing the size of array to it's half to optimise space usage
         if used_space < len(self.array) // 2:
             new_size = len(self.array) // 2
             self.array = self.array[:new_size]
-            # Adjusting stack indices to the new array size
-            if self.st1_top_idx >= new_size:
-                self.st1_top_idx = new_size - 2
-            if self.st2_top_idx >= new_size:
-                self.st2_top_idx = new_size - 1
 
 
 def main():
