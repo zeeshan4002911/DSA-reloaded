@@ -36,26 +36,29 @@ class Solution:
         size = len(s)
         st = deque()
 
+        ### Algorithm steps ###
         for i in range(size):
-            # Adding all the variables or number into the result
+            # 1. Adding all the operand into the result
             if str(s[i]).isalnum():
                 result += s[i]
-            
-            # Processing for bracket element
+
+            # 2. Processing for bracket element
             elif s[i] == "(":
                 st.append(s[i])
             elif s[i] == ")":
+                # On closing bracket popping all the element from stack till the opening bracket and adding to result
                 while st and st[-1] != "(":
                     result += st.pop()
+                # Removing the opening bracket from the stack
                 st.pop()
-            
-            # For operator
+
+            # 3. For operator
             else:
                 while st and self.precedence_check(s[i]) <= self.precedence_check(st[-1]):
                     result += st.pop()
                 st.append(s[i])
 
-        # Adding remaining element of stack
+        # 4. Adding remaining element of stack
         while st:
             result += st.pop()
 

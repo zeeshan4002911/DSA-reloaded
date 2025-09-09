@@ -56,15 +56,12 @@ class Solution:
 
             # 3. For operator
             else:
+                # Special case for ^ operator
                 if s[i] == "^":
-                    while st and self.precedence_check(s[i]) <= self.precedence_check(
-                        st[-1]
-                    ):
+                    while st and self.precedence_check(s[i]) <= self.precedence_check(st[-1]):
                         result += st.pop()
                 else:
-                    while st and self.precedence_check(s[i]) < self.precedence_check(
-                        st[-1]
-                    ):
+                    while st and self.precedence_check(s[i]) < self.precedence_check(st[-1]):
                         result += st.pop()
                 st.append(s[i])
 
