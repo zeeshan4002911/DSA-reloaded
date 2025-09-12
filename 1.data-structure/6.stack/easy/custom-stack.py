@@ -14,13 +14,13 @@ class CustomStack:
     def __init__(self):
         self.top = None
 
-    def getLastElement(self):
+    def get_last_element(self):
         if self.top is None:
             return
 
         return f"last element:: {self.top.data}"
 
-    def removeLastElement(self):
+    def remove_Last_element(self):
         if self.top is None:
             return
 
@@ -29,12 +29,14 @@ class CustomStack:
         self.top.next = None
         return f"{data} removed successfully"
 
-    def addElement(self, ele):
+    def add_element(self, ele):
         node = Node(ele)
         if self.top is None:
             node.min = ele
             self.top = node
         else:
+            if ele == '11': 
+                import pdb; pdb.set_trace()
             node.min = min(self.top.min, ele)
             node.prev = self.top
             self.top.next = node
@@ -42,11 +44,20 @@ class CustomStack:
 
         return f"{ele} inserted successfully" 
 
-    def getMin(self):
+    def get_min(self):
         if self.top is None:
             return
 
         return f"min element:: {self.top.min}"
+    
+    def print_stack(self):
+        arr = []
+        curr = self.top
+        while curr is not None:
+            data = (curr.data, curr.min)
+            arr.append(data)
+            curr = curr.prev
+        return arr
 
 
 class Node:
@@ -61,19 +72,21 @@ def main():
     c_st = CustomStack()
     while True:
         print(
-            "GetLastElement(l) / RemoveLastElement(r) / AddElement(a) / GetMin(g)"
+            "GetLastElement(l) / RemoveLastElement(r) / AddElement(a) / GetMin(m) / display(d)"
         )
         user_input = input().strip().split()[:2]
         if user_input[0] == "l":
-            print(c_st.getLastElement())
+            print(c_st.get_last_element())
         elif user_input[0] == "r":
-            print(c_st.removeLastElement())
+            print(c_st.remove_Last_element())
         elif user_input[0] == "a":
-            print(c_st.addElement(user_input[1]))
-        elif user_input[0] == "g":
-            print(c_st.getMin())
+            print(c_st.add_element(int(user_input[1])))
+        elif user_input[0] == "m":
+            print(c_st.get_min())
         elif user_input[0] == "e":
             break
+        elif user_input[0] == 'd':
+            print(c_st.print_stack())
 
 
 if __name__ == "__main__":
