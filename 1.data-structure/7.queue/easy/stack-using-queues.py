@@ -66,8 +66,7 @@ class Stack:
                 _queue_helper.put(ele)
         
         # Transfering all the element back to original queue
-        while not _queue_helper.empty():
-            self._queue.put(_queue_helper.get())
+        self._queue = _queue_helper
         
         return data
 
