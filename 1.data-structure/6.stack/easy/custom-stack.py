@@ -25,8 +25,9 @@ class CustomStack:
             return
 
         data = self.top.data
-        self.top = self.top.prev
+        next_node = self.top.next
         self.top.next = None
+        self.top = next_node
         return f"{data} removed successfully"
 
     def add_element(self, ele):
@@ -35,11 +36,8 @@ class CustomStack:
             node.min = ele
             self.top = node
         else:
-            if ele == '11': 
-                import pdb; pdb.set_trace()
             node.min = min(self.top.min, ele)
-            node.prev = self.top
-            self.top.next = node
+            node.next = self.top
             self.top = node
 
         return f"{ele} inserted successfully" 
@@ -56,7 +54,7 @@ class CustomStack:
         while curr is not None:
             data = (curr.data, curr.min)
             arr.append(data)
-            curr = curr.prev
+            curr = curr.next
         return arr
 
 
@@ -64,7 +62,6 @@ class Node:
     def __init__(self, data):
         self.data = data
         self.next = None
-        self.prev = None
         self.min = None
 
 
