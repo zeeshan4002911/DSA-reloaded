@@ -27,19 +27,31 @@ class Solution:
         if k >= size - 2:
             return "k size overflow"
 
-        window_size = size - k
+        window_size = size - k - 1
+        diff = [arr[i] - arr[i - 1] for i in range(1, size)]
         result_min = float("inf")
+        # Monotonic deque, in decreasing order
         window_deque = deque()
 
-        for i in range(1, window_size):
-            window_deque.append(arr[i] - arr[i - 1])
+        for i in range(window_size):
+            # Monotonic deque - decreasing order, so the greatest will be in the front
+            while window_deque and diff[i] >= diff[window_deque[-1]]:
+                window_deque.pop()
+            window_deque.append(i)
 
-        result_min = min(result_min, max(window_deque))
+        for i in range(window_size, size - 1):
+            max_val = diff[window_deque[0]]
+            result_min = min(result_min, max_val)
 
-        for i in range(window_size, size):
-            window_deque.popleft()
-            window_deque.append(arr[i] - arr[i - 1])
-            result_min = min(result_min, max(window_deque))
+            # For each window removing the front elements of deque
+            while window_deque and window_deque[0] <= i - window_size:
+                window_deque.popleft()
+
+            # For greater difference value, maintaing the monotonic property
+            while window_deque and diff[i] >= diff[window_deque[-1]]:
+                window_deque.pop()
+            # To maintain decreasing order adding the value in right order/position
+            window_deque.append(i)
 
         return result_min
 
