@@ -36,7 +36,7 @@ class Solution:
             while left <= right and local_sum > x:
                 local_sum -= arr[left]
                 left += 1
-            
+
             if local_sum <= x:
                 result = max(result, local_sum)
 
