@@ -35,7 +35,7 @@ Inorder traversal is a depth-first traversal method that follows this sequence:
 
 import sys, os
 
-sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), "..", ".."))
+sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), ".."))
 from binary_tree_helper import BinaryTree
 
 
