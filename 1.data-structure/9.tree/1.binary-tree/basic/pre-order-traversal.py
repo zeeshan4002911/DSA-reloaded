@@ -39,13 +39,14 @@ Auxiliary Space: O(n)
 """
 
 import sys, os
+from queue import LifoQueue
 
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), ".."))
 from binary_tree_helper import BinaryTree
 
 
 class Traversal:
-    def pre_order_traversal(self, root):
+    def pre_order_traversal_rec(self, root):
         return self._helper(root, [])
 
     def _helper(self, root, res):
@@ -58,6 +59,25 @@ class Traversal:
 
         return res
 
+    def pre_order_traversal_ittr(self, root):
+        if root is None:
+            return []
+
+        result = []
+        stack = LifoQueue()
+        stack.put(root)
+
+        while not stack.empty():
+            curr = stack.get()
+            result.append(curr.data)
+
+            if curr.right is not None:
+                stack.put(curr.right)
+            if curr.left is not None:
+                stack.put(curr.left)
+
+        return result
+
 
 def main():
     arr = input("Enter tree in form of level order list: ").strip().split()
@@ -67,7 +87,8 @@ def main():
     # bt.print_tree()
 
     traversal = Traversal()
-    result = traversal.pre_order_traversal(root)
+    # result = traversal.pre_order_traversal_rec(root)
+    result = traversal.pre_order_traversal_ittr(root)
     print(result)
 
 
