@@ -34,21 +34,44 @@ Inorder traversal is a depth-first traversal method that follows this sequence:
 """
 
 import sys, os
+from queue import LifoQueue
 
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), ".."))
 from binary_tree_helper import BinaryTree
 
 
 class Traversal:
-    def in_order_traversal(self, root, res):
+    def in_order_traversal_rec(self, root, res):
         if root is None:
             return
 
-        self.in_order_traversal(root.left, res)
+        self.in_order_traversal_rec(root.left, res)
         res.append(root.data)
-        self.in_order_traversal(root.right, res)
+        self.in_order_traversal_rec(root.right, res)
 
         return res
+
+    def in_order_traversal_ittr(self, root):
+        if root is None:
+            return []
+
+        result = []
+        stack = LifoQueue()
+        # Pointer to traverse the tree
+        curr = root
+
+        while curr or not stack.empty():
+            # Going to left most node till the curr become null
+            while curr:
+                stack.put(curr)
+                curr = curr.left
+
+            curr = stack.get()
+            result.append(curr.data)
+            # Either right node or null, null will pull from stack and backtrack
+            curr = curr.right
+
+        return result
 
 
 def main():
@@ -59,7 +82,8 @@ def main():
     # bt.print_tree()
 
     traversal = Traversal()
-    result = traversal.in_order_traversal(root, [])
+    # result = traversal.in_order_traversal_rec(root, [])
+    result = traversal.in_order_traversal_ittr(root)
     print(result)
 
 
