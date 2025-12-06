@@ -67,12 +67,17 @@ class Traversal:
         stack = LifoQueue()
         stack.put(root)
 
+        # DFS - Depth first search using stack for backtracking
         while not stack.empty():
             curr = stack.get()
             result.append(curr.data)
 
             if curr.right is not None:
                 stack.put(curr.right)
+
+            """ Adding left last so that on next pop it will get processed,
+            and traverse from left to right """
+
             if curr.left is not None:
                 stack.put(curr.left)
 
