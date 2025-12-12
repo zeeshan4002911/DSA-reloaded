@@ -30,6 +30,7 @@ Auxiliary Space: O(h)
 """
 
 import sys, os
+from queue import Queue
 
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), ".."))
 from binary_tree_helper import BinaryTree
@@ -53,6 +54,27 @@ class Solution:
             res += res_r + 1
         return res
 
+    def level_of_node_ittr(self, root, target):
+        if root is None:
+            return 0
+
+        queue = Queue()
+        queue.put((root, 1))
+
+        while not queue.empty():
+            curr, level_num = queue.get()
+            # Return level number once target is found
+            if curr.data == target:
+                return level_num
+
+            if curr.left:
+                queue.put((curr.left, level_num + 1))
+            if curr.right:
+                queue.put((curr.right, level_num + 1))
+
+        # Target not exists in tree
+        return 0
+
 
 def main():
     arr = input("Enter tree in form of level order list: ").strip().split()
@@ -62,7 +84,7 @@ def main():
     root = bt.build_tree(arr)
 
     soln = Solution()
-    result = soln.level_of_node(root, target)
+    result = soln.level_of_node_ittr(root, target)
     print(result)
 
 
