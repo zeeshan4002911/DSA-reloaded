@@ -25,6 +25,7 @@ Auxiliary Space: O(h)
 """
 
 import sys, os
+from queue import Queue
 
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), ".."))
 from binary_tree_helper import BinaryTree
@@ -44,6 +45,25 @@ class Traversal:
 
         return max(max_right_level, max_left_level)
 
+    def depth_of_tree_ittr(self, root):
+        if root is None:
+            return 0
+
+        result = 0
+        queue = Queue()
+        queue.put((root, 0))
+
+        while not queue.empty():
+            curr, level_num = queue.get()
+            result = max(result, level_num)
+
+            if curr.left:
+                queue.put((curr.left, level_num + 1))
+            if curr.right:
+                queue.put((curr.right, level_num + 1))
+
+        return result
+
 
 def main():
     arr = input("Enter tree in form of level order list: ").strip().split()
@@ -53,7 +73,8 @@ def main():
     # bt.print_tree()
 
     traversal = Traversal()
-    result = traversal.depth_of_tree(root)
+    # result = traversal.depth_of_tree(root)
+    result = traversal.depth_of_tree_ittr(root)
     print(result)
 
 
