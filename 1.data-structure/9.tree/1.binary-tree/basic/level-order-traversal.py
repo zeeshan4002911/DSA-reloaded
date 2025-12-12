@@ -6,12 +6,19 @@ Note: A level order traversal is a breadth-first search (BFS) of the tree. It vi
 Examples:
 
 Input: root = [1, 2, 3]
+   1
+ /   \
+2     3
 
 Output: [[1], [2, 3]]
 Explanation: We start with the root node 1, so the first level of the traversal is [1]. Then we move to its children 2 and 3, which form the next level, giving the final output [[1], [2, 3]].
 
 Input: root = [10, 20, 30, 40, 50]
-
+    10
+   /  \
+  20  30
+ /  \
+40  50
 Output: [[10], [20, 30], [40, 50]]
 Explanation: We begin with the root node 10, which forms the first level as [10]. Its children 20 and 30 make up the second level, and their children 40 and 50 form the third level, resulting in [[10], [20, 30], [40, 50]].
 
@@ -25,13 +32,14 @@ Auxiliary Space: O(n)
 """
 
 import sys, os
+from queue import Queue
 
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), ".."))
 from binary_tree_helper import BinaryTree
 
 
 class Traversal:
-    def level_order_traversal(self, root):
+    def level_order_traversal_rec(self, root):
         return self._helper(root, 0, [])
 
     def _helper(self, node, curr_level, levels):
@@ -40,13 +48,38 @@ class Traversal:
 
         if len(levels) <= curr_level:
             levels.append([])
-        
+
         levels[curr_level].append(node.data)
 
         self._helper(node.left, curr_level + 1, levels)
         self._helper(node.right, curr_level + 1, levels)
 
         return levels
+
+    def level_order_traversal_ittr(self, root):
+        if root is None:
+            return []
+
+        result = []
+        queue = Queue()
+        queue.put((root, 0))
+
+        # BFS - Breadth First Search using queue for backtracking
+        while not queue.empty():
+            curr, level_num = queue.get()
+
+            # logic to add new list based on level
+            if len(result) <= level_num:
+                result.append([])
+            result[level_num].append(curr.data)
+
+            if curr.left:
+                queue.put((curr.left, level_num + 1))
+
+            if curr.right:
+                queue.put((curr.right, level_num + 1))
+
+        return result
 
 
 def main():
@@ -57,7 +90,8 @@ def main():
     # bt.print_tree()
 
     traversal = Traversal()
-    result = traversal.level_order_traversal(root)
+    # result = traversal.level_order_traversal_rec(root)
+    result = traversal.level_order_traversal_ittr(root)
     print(result)
 
 
