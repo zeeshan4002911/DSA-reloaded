@@ -20,11 +20,12 @@ class BinaryTree:
     to have less None values
     """
 
-    def build_tree(self, lst: List) -> BinaryTreeNode | None:
-        if not lst:
+    def build_tree(self, p_lst: List) -> BinaryTreeNode | None:
+        if not p_lst:
             self.root = None
             return None
 
+        lst = [None if val == "N" else val for val in p_lst]
         size = len(lst)
         queue = Queue()
 
