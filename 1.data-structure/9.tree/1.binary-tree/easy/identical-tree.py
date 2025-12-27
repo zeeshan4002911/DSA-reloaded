@@ -38,8 +38,10 @@ class Solution:
 
         while not st.empty():
             curr1, curr2 = st.get()
+            # Condition to check if any one of tree is missing similar branch
             if curr1 is None or curr2 is None:
                 return False
+            # Condition to check if the data is different
             elif curr1.data != curr2.data:
                 return False
 
@@ -49,6 +51,23 @@ class Solution:
                 st.put((curr1.left, curr2.left))
 
         return True
+
+    def check_if_identical_rec(self, r1, r2):
+        # Condition for the base case of leaf node
+        if r1 is None and r2 is None:
+            return True
+        # Condition to check if any one of tree is missing similar branch
+        if r1 is None or r2 is None:
+            return False
+        # Condition to check if the data is different
+        if r1.data != r2.data:
+            return False
+
+        l_result = self.check_if_identical_rec(r1.left, r2.left)
+        r_result = self.check_if_identical_rec(r1.right, r2.right)
+
+        # Not identical if either left or right sub tree is not identical
+        return l_result and r_result
 
 
 def main():
