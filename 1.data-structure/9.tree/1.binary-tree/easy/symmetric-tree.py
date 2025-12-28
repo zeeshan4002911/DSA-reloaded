@@ -35,37 +35,9 @@ class Solution:
         if root is None:
             return True
 
-        # For single node, symmetric tree as left and right child does not exists
-        if root and root.left is None and root.right is None:
-            return True
+        return self.check_symmetric_helper(root.left, root.right)
 
-        # For signle node with one child, not symmetric tree
-        if root.left is None or root.right is None:
-            return False
-
-        # Convert the left sub tree to mirror tree
-        root_left_mirror = self.convert_to_mirror_tree_rec(root.left)
-
-        # Check the left mirror sub tree and right sub tree
-        res = self.check_if_identical_rec(root_left_mirror, root.right)
-
-        return res
-
-    def convert_to_mirror_tree_rec(self, root):
-        if root is None:
-            return
-
-        # Swapping the left and right node
-        temp = root.left
-        root.left = root.right
-        root.right = temp
-
-        self.convert_to_mirror_tree_rec(root.left)
-        self.convert_to_mirror_tree_rec(root.right)
-
-        return root
-
-    def check_if_identical_rec(self, r1, r2):
+    def check_symmetric_helper(self, r1, r2):
         # Condition for the base case of leaf node
         if r1 is None and r2 is None:
             return True
@@ -76,11 +48,15 @@ class Solution:
         if r1.data != r2.data:
             return False
 
-        l_result = self.check_if_identical_rec(r1.left, r2.left)
-        r_result = self.check_if_identical_rec(r1.right, r2.right)
+        """
+        Checking both the branch of tree, 
+        1) left node of left sub tree with right node of right sub tree
+        2) right node of left sub tree with left node of right sub tree
+        """
+        res_1 = self.check_symmetric_helper(r1.left, r2.right)
+        res_2 = self.check_symmetric_helper(r1.right, r2.left)
 
-        # Not identical if either left or right sub tree is not identical
-        return l_result and r_result
+        return res_1 and res_2
 
 
 def main():
