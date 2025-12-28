@@ -29,6 +29,8 @@ import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from binary_tree_helper import BinaryTree
 
+from queue import LifoQueue
+
 
 class Solution:
     def check_symmetric_tree_rec(self, root):
@@ -58,6 +60,32 @@ class Solution:
 
         return res_1 and res_2
 
+    def check_symmetric_tree_ittr(self, root):
+        # Condition for NULL node
+        if root is None:
+            return True
+        # Condition for single node
+        if root and root.left is None and root.right is None:
+            return True
+
+        st = LifoQueue()
+        st.put((root.left, root.right))
+
+        while not st.empty():
+            l_sub_tree, r_sub_tree = st.get()
+
+            if l_sub_tree is None and r_sub_tree is None:
+                continue
+            if l_sub_tree is None or r_sub_tree is None:
+                return False
+            if l_sub_tree.data != r_sub_tree.data:
+                return False
+
+            st.put((l_sub_tree.left, r_sub_tree.right))
+            st.put((l_sub_tree.right, r_sub_tree.left))
+
+        return True
+
 
 def main():
     arr = input("Enter tree in form of level order list: ").strip().split()
@@ -65,7 +93,7 @@ def main():
     root = bt.build_tree(arr)
 
     soln = Solution()
-    res = soln.check_symmetric_tree_rec(root)
+    res = soln.check_symmetric_tree_ittr(root)
     print(res)
 
 
