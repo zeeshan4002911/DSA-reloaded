@@ -32,7 +32,7 @@ from binary_search_tree_helper import BinarySearchTree, Node
 
 
 class Solution:
-    def insertion(self, root, key):
+    def insertion_ittr(self, root, key):
         if root is None:
             new_node = Node(key)
             return new_node
@@ -58,6 +58,17 @@ class Solution:
                 break
 
         return root
+    
+    def insertion_rec(self, root, key):
+        if root is None:
+            return Node(key)
+        
+        if root.data < key:
+            root.right = self.insertion_rec(root.right, key)
+        elif root.data > key:
+            root.left = self.insertion_rec(root.left, key)
+        
+        return root
 
 
 def main():
@@ -68,7 +79,7 @@ def main():
     root = bst.build_bst(arr)
 
     soln = Solution()
-    soln.insertion(root, key)
+    soln.insertion_ittr(root, key)
     bst.print_tree()
 
 
