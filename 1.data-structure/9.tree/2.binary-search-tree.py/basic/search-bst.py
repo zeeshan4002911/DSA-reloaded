@@ -50,15 +50,14 @@ class Solution:
     def search_rec(self, root, key):
         if root is None:
             return False
-        # Condition for checking
-        if root.data == key:
+
+        if root.data < key:
+            return self.search_rec(root.right, key)
+        elif root.data > key:
+            return self.search_rec(root.left, key)
+        # Condition for found
+        else:
             return True
-
-        left_tree_res = self.search_rec(root.left, key)
-        right_tree_res = self.search_rec(root.right, key)
-
-        # Return True if search is able to find the key in left or right subtree
-        return left_tree_res or right_tree_res
 
 
 def main():
