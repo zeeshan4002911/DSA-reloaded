@@ -74,7 +74,7 @@ class Solution:
 def main():
     arr = input("Enter the tree level order: ").strip().split()
     key = int(input("Enter the key to insert: ").strip())
-    arr = [int(val) if isinstance(val, int) else val for val in arr]
+    arr = [x.replace(',', '').strip() for x in arr]
     bst = BinarySearchTree()
     root = bst.build_bst(arr)
 
