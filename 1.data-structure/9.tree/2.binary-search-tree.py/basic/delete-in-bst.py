@@ -86,6 +86,67 @@ class Solution:
             curr = curr.right
         return curr
 
+    def deletion_ittr(self, root, x):
+        # Case for no root
+        if root is None:
+            return root
+        
+        # Case for single node which needs to delete
+        if root.left is None and root.right is None and root.data == x:
+            return None
+
+        parent_node = None
+        curr = root
+
+        # Searching for the node be deleted
+        while curr is not None and curr.data != x:
+            parent_node = curr
+            if curr.data < x:
+                curr = curr.right
+            elif curr.data > x:
+                curr = curr.left
+
+        # In case of not found
+        if curr is None:
+            return root
+
+        # Case 3: If both left and right child are present (replacement with inorder predecessor)
+        if curr.left and curr.right:
+            # Keeping the predecessor parent reference for delinking later
+            pred_parent = curr
+            pred = curr.left
+            while pred is not None and pred.right is not None:
+                pred_parent = pred
+                pred = pred.right
+
+            # Switching the current node value with predecessor value
+            curr.data = pred.data
+            curr = pred
+            parent_node = pred_parent
+
+        # Current node child reference for relinking with current node's parent
+        child_node = None
+        # Case 2: If any one child is not present then replacing the parent with other child
+        if curr.left is None:
+            child_node = curr.right
+        elif curr.right is None:
+            child_node = curr.left
+        else:
+            # Case 1: Leaf node for deletion
+            child_node = None
+
+        # Case for root node deletion
+        if parent_node is None:
+            return child_node
+        
+        # Re-linking the parent of the node which needs to be deleted with it's child node
+        if parent_node.left == curr:
+            parent_node.left = child_node
+        else:
+            parent_node.right = child_node
+
+        return root
+
 
 def main():
     arr = input("Enter the tree level order: ").strip().split()
@@ -97,7 +158,8 @@ def main():
 
     soln = Solution()
     result = soln.deletion_rec(root, key)
-    print(result)
+    print()
+    bst.print_tree(result)
 
 
 if __name__ == "__main__":
