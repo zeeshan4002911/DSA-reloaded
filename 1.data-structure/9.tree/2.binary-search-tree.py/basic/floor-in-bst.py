@@ -52,17 +52,17 @@ from binary_search_tree_helper import BinarySearchTree
 
 
 class Solution:
-    def get_floor(self, root, x):
+    def get_floor_ittr(self, root, x):
         if root is None:
             return -1
-        
+
         curr = root
         floor_value = -1
         while curr:
             # Capturing the floor value of the current node data before going to next
             if curr.data <= x:
                 floor_value = curr.data
-            
+
             if curr.data < x:
                 curr = curr.right
             elif curr.data > x:
@@ -71,6 +71,21 @@ class Solution:
                 return curr.data
 
         return floor_value
+
+    def get_floor_rec(self, root, x, floor_value=-1):
+        if root is None:
+            return floor_value
+
+        if root.data <= x:
+            floor_value = root.data
+
+        if root.data < x:
+            return self.get_floor_rec(root.right, x, floor_value)
+        elif root.data > x:
+            return self.get_floor_rec(root.left, x, floor_value)
+        else:
+            return floor_value
+
 
 def main():
     arr = input("Enter the tree level order: ").strip().split()
@@ -81,7 +96,7 @@ def main():
     bst.print_tree()
 
     soln = Solution()
-    result = soln.get_floor(root, x)
+    result = soln.get_floor_ittr(root, x)
     print(result)
 
 
