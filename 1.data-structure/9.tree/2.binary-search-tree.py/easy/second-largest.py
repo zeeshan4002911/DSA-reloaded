@@ -55,9 +55,35 @@ class Solution:
             # Counting from inorder end (reverse inorder)
             if k_count == x:
                 return curr.data
-            
+
             curr = curr.left
 
+        return None
+
+    def kth_largest_rec(self, root, x=2):
+        if root is None:
+            return None
+
+        # List instead of primative int to mutate the value by passing as reference on each recursive call
+        k_count = [0]
+        return self.kth_largest_rec_helper(root, x, k_count)
+
+    def kth_largest_rec_helper(self, root, x, k_count):
+        if root is None:
+            return None
+
+        # Reverse inorder traversal as the largest will be at the end of inorder result
+        r_subtree = self.kth_largest_rec_helper(root.right, x, k_count)
+
+        k_count[0] += 1
+        if k_count[0] == x:
+            return root.data
+
+        l_subtree = self.kth_largest_rec_helper(root.left, x, k_count)
+        if r_subtree is not None:
+            return r_subtree
+        if l_subtree is not None:
+            return l_subtree
         return None
 
 
@@ -70,7 +96,7 @@ def main():
     bst.print_tree()
 
     soln = Solution()
-    result = soln.kth_largest(root, x)
+    result = soln.kth_largest_rec(root, x)
     print(result)
 
 
