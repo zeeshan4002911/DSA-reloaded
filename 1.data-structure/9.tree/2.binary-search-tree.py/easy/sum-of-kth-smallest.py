@@ -70,7 +70,7 @@ class Solution:
                 curr = curr.left
 
             curr = st.get()
-            
+
             # Counting from the smallest element
             k_count += 1
             if k_count <= k:
@@ -80,8 +80,32 @@ class Solution:
                 break
 
             curr = curr.right
-        
+
         return k_sum
+
+    def sum_of_kth_smallest_element_rec(self, root, k):
+        if root is None:
+            return 0
+
+        self.k_sum = 0
+        self.k_count = 0
+        self.sum_of_kth_smallest_element_rec_helper(root, k)
+        return self.k_sum
+
+    def sum_of_kth_smallest_element_rec_helper(self, root, k):
+        if not root or self.k_count > k:
+            return
+
+        self.sum_of_kth_smallest_element_rec_helper(root.left, k)
+
+        self.k_count += 1
+        if self.k_count <= k:
+            self.k_sum += root.data
+        else:
+            return
+
+        if self.k_count <= k:
+            self.sum_of_kth_smallest_element_rec_helper(root.right, k)
 
 
 def main():
@@ -93,7 +117,7 @@ def main():
     bst.print_tree()
 
     soln = Solution()
-    result = soln.sum_of_kth_smallest_element_ittr(root, k)
+    result = soln.sum_of_kth_smallest_element_rec(root, k)
     print(result)
 
 
