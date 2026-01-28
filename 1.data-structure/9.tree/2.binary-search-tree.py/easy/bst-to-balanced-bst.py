@@ -52,7 +52,7 @@ class Solution:
         if low > high:
             return None
 
-        mid = (high + low) // 2
+        mid = low + (high - low) // 2
         root = Node(inorder_traversal[mid])
 
         root.left = self.construct_bst_from_inorder(inorder_traversal, low, mid - 1)
