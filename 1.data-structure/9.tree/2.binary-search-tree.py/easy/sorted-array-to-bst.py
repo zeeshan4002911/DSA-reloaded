@@ -26,6 +26,8 @@ import os, sys
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), ".."))
 from binary_search_tree_helper import BinarySearchTree, Node
 
+from collections import deque
+
 
 class Solution:
     def sorted_array_to_bst(self, arr):
@@ -35,20 +37,50 @@ class Solution:
         if low > high:
             return None
 
-        mid =  low + (high - low) // 2
+        mid = low + (high - low) // 2
         root = Node(inorder_traversal[mid])
 
         root.left = self.construct_bst_from_inorder(inorder_traversal, low, mid - 1)
         root.right = self.construct_bst_from_inorder(inorder_traversal, mid + 1, high)
         return root
 
+    def sorted_array_to_bst_ittr(self, arr):
+        if arr is None or not len(arr):
+            return None
+
+        input_arr = [None if val == "N" else int(val) for val in arr]
+
+        que = deque()
+        low = 0
+        high = len(input_arr) - 1
+        mid = low + (high - low) // 2
+        root = Node(input_arr[mid])
+        que.append((root, low, high))
+
+        while que:
+            curr, low, high = que.popleft()
+            mid = low + (high - low) // 2
+
+            if low < mid:
+                idx = low + ((mid - 1) - low) // 2
+                curr.left = Node(input_arr[idx])
+                que.append((curr.left, low, mid - 1))
+
+            if high > mid:
+                idx = (mid + 1) + (high - (mid + 1)) // 2
+                curr.right = Node(input_arr[idx])
+                que.append((curr.right, mid + 1, high))
+
+        return root
+
 
 def main():
     arr = input("Enter the tree level order: ").strip().split()
+    arr = [x.replace(",", "").strip() for x in arr]
     bst = BinarySearchTree()
 
     soln = Solution()
-    result = soln.unbalanced_bst_to_balanced_bst(arr)
+    result = soln.sorted_array_to_bst_ittr(arr)
     bst.print_tree(result)
 
 
