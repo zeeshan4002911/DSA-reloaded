@@ -1,4 +1,5 @@
 from queue import Queue
+from collections import deque
 
 
 class Node:
@@ -12,6 +13,7 @@ class BinarySearchTree:
     def __init__(self):
         self.root = None
 
+    # Building bst using the min and max range to validate the bst rule
     def build_bst(self, arr):
         if arr is None:
             self.root = None
@@ -51,6 +53,55 @@ class BinarySearchTree:
                 i += 1
 
         return self.root
+
+
+    # Building bst using sorted array input, using index as range for positioning in proper place
+    def build_bst_from_sorted(self, arr):
+        if arr is None or not len(arr):
+            return None
+
+        input_arr = [None if val == "N" else int(val) for val in arr]
+
+        # Deque is better than queue module in single threaded use
+        que = deque()
+        low = 0
+        high = len(input_arr) - 1
+
+        # mid point of inorder result or sorted input for balanced binary search tree
+        mid = low + (high - low) // 2
+        root = Node(input_arr[mid])
+        # Index as range for calculation for each node
+        que.append((root, low, high))
+
+        while que:
+            curr, low, high = que.popleft()
+            mid = low + (high - low) // 2
+
+            # If left subtree exists i.e., values are there in left side of current node
+            if low < mid:
+                idx = low + ((mid - 1) - low) // 2
+                curr.left = Node(input_arr[idx])
+                que.append((curr.left, low, mid - 1))
+
+            # If right subtree exists i.e., values are there in right side of current node
+            if high > mid:
+                idx = (mid + 1) + (high - (mid + 1)) // 2
+                curr.right = Node(input_arr[idx])
+                que.append((curr.right, mid + 1, high))
+
+        return root
+
+    # Recursive bst build using sorted array input, using index as range for positioning in proper place
+    def build_bst_from_sorted_rec(self, arr, low, high):
+        if low > high:
+            return None
+
+        mid = low + (high - low) // 2
+        root = Node(arr[mid])
+
+        root.left = self.build_bst_from_sorted_rec(arr, low, mid - 1)
+        root.right = self.build_bst_from_sorted_rec(arr, mid + 1, high)
+        return root
 
     ### For Printing level wise tree for visualization
     def print_tree(self, root=None):
