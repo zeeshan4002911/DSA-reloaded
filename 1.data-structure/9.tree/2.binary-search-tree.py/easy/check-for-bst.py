@@ -95,9 +95,9 @@ def main():
     arr = input("Enter the tree level order: ").strip().split()
     arr = [x.replace(",", "").strip() for x in arr]
     arr = [int(x) if x != "N" else x for x in arr]
-    bst = BinaryTree()
-    root = bst.build_tree(arr)
-    bst.print_tree()
+    bt = BinaryTree()
+    root = bt.build_tree(arr)
+    bt.print_tree()
 
     soln = Solution()
     result = soln.check_for_bst_rec(root)
