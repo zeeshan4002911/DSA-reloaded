@@ -40,7 +40,7 @@ class Solution:
 
         for r in range(j + 1, n):
             third_sum += arr[r]
-    
+
         # Moving the pointers based on the fact that i < j < n
         while i < j and j < n:
             # Flag to detect pointer position change
@@ -60,13 +60,37 @@ class Solution:
                 second_sum += arr[j]
                 third_sum -= arr[j]
 
-            # If no pointer is getting moved then breaking the loop as we either found a value or 
+            # If no pointer is getting moved then breaking the loop as we either found a value or
             # it's not possible to split in three equal sum parts
             if not is_pointers_moved:
                 break
 
         if first_sum == second_sum == third_sum:
             return [i, j]
+
+        return [-1, -1]
+
+    def split_into_three_equal_aproach2(self, arr):
+        result = []
+        total = sum(arr)
+
+        # In case if total sum is not divisible by 3 that means it's not possible to break in three equal parts
+        if total % 3 != 0:
+            return [-1, -1]
+
+        n = len(arr)
+        split_total = total / 3
+        curr_sum = 0
+        for k in range(n):
+            curr_sum += arr[k]
+
+            # End point whenever running sum becomes equal to one third of total sum on input
+            if curr_sum == split_total:
+                result.append(k)
+                curr_sum = 0
+
+                if len(result) == 2:
+                    return result
 
         return [-1, -1]
 
