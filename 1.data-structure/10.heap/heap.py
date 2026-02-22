@@ -42,6 +42,9 @@ class MaxHeap:
         """
         Swap with the last node and then Sift/Bubble down the root to right position
         """
+        if not self._lst:
+            print("Heap is empty")
+            return None
 
         last = len(self._lst) - 1
         self._lst[last], self._lst[0] = self._lst[0], self._lst[last]
@@ -55,24 +58,46 @@ class MaxHeap:
             right_child = 2 * i + 2
 
             if left_child < size and self._lst[i] < self._lst[left_child]:
-                self._lst[i], self._lst[left_child] = (
-                    self._lst[left_child],
-                    self._lst[i],
-                )
                 i = left_child
 
             if right_child < size and self._lst[i] < self._lst[right_child]:
-                self._lst[i], self._lst[right_child] = (
-                    self._lst[right_child],
-                    self._lst[i],
-                )
                 i = right_child
 
             if i == cache_curr_node:
                 # Breaking once the current node (i) is in it's right position and there's no bubble down
                 break
+            else:
+                self._lst[i], self._lst[cache_curr_node] = (
+                    self._lst[cache_curr_node],
+                    self._lst[i],
+                )
 
         return pop_element
+
+    def heapify(self, arr):
+        # Copy input to heap
+        self._lst = arr[:]
+        n = len(self._lst)
+
+        # Starting from n/2 - 1 as in complete binary tree last n/2 elements are leaf node
+        for i in range(n // 2 - 1, -1, -1):
+            # Sift Down for each parent node
+            self._heapify_helper(i, n, self._lst)
+
+    def _heapify_helper(self, i, n, arr):
+        cache_curr_node = i
+        left_child = 2 * i + 1
+        right_child = 2 * i + 2
+
+        if left_child < n and arr[i] < arr[left_child]:
+            i = left_child
+
+        if right_child < n and arr[i] < arr[right_child]:
+            i = right_child
+
+        if i != cache_curr_node:
+            arr[i], arr[cache_curr_node] = arr[cache_curr_node], arr[i]
+            self._heapify_helper(i, n, arr)
 
 
 def main():
