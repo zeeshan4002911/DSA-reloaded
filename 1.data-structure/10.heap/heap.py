@@ -99,12 +99,42 @@ class MaxHeap:
             arr[i], arr[cache_curr_node] = arr[cache_curr_node], arr[i]
             self._heapify_helper(i, n, arr)
 
+    def deleteAt(self, idx):
+        size = len(self._lst)
+        if idx >= size:
+            print("Index out of bound")
+            return
+
+        pop_element = self._lst[idx]
+        # Replacing the node to delete with +ve infinity
+        self._lst[idx] = float("inf")
+        i = idx
+
+        # Bubbling up +ve infinity to move it up to root
+        while i > 0:
+            parent_node = (i - 1) // 2
+
+            if self._lst[parent_node] >= self._lst[i]:
+                break
+            else:
+                self._lst[parent_node], self._lst[i] = (
+                    self._lst[i],
+                    self._lst[parent_node],
+                )
+                i = parent_node
+
+        self.delete()
+        return pop_element
+
 
 def main():
     """
-    Input format: 1 5 1 2 0 1, where 1 insert the next element to heap and 0 pop from heap
+    Input format: 1 5 1 2 2 1 3,
+    1 Insert the next element to heap
+    2 Delete at index (the next element will be index input)
+    3 Pop from heap
     """
-    arr = input().strip().split()
+    arr = input("Enter the operation array: ").strip().split()
     arr = list(map(int, arr))
 
     heap = MaxHeap()
@@ -117,7 +147,13 @@ def main():
             print("Inserted:", inp)
             heap.print()
             i += 1
-        elif arr[i] == 0:
+        elif arr[i] == 2:
+            idx = arr[i + 1]
+            heap.deleteAt(idx)
+            print("Delete At", idx)
+            heap.print()
+            i += 1
+        elif arr[i] == 3:
             res = heap.delete()
             print("Removed:", res)
             heap.print()
