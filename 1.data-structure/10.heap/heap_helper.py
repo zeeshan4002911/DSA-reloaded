@@ -89,13 +89,14 @@ class MaxHeap:
         left_child = 2 * i + 1
         right_child = 2 * i + 2
 
+        # Move current node in case the parent is less than it's children to maintain min heap property
         if left_child < n and arr[curr_node] < arr[left_child]:
             curr_node = left_child
-
-        if right_child < n and arr[i] < arr[right_child]:
+        if right_child < n and arr[curr_node] < arr[right_child]:
             curr_node = right_child
 
         if i != curr_node:
+            # Swapping the parent with it's larger value child
             arr[i], arr[curr_node] = arr[curr_node], arr[i]
             self._heapify_helper(i, n, arr)
 
