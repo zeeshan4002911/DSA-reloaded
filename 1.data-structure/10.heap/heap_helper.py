@@ -85,18 +85,18 @@ class MaxHeap:
             self._heapify_helper(i, n, self._lst)
 
     def _heapify_helper(self, i, n, arr):
-        cache_curr_node = i
+        curr_node = i
         left_child = 2 * i + 1
         right_child = 2 * i + 2
 
-        if left_child < n and arr[i] < arr[left_child]:
-            i = left_child
+        if left_child < n and arr[curr_node] < arr[left_child]:
+            curr_node = left_child
 
         if right_child < n and arr[i] < arr[right_child]:
-            i = right_child
+            curr_node = right_child
 
-        if i != cache_curr_node:
-            arr[i], arr[cache_curr_node] = arr[cache_curr_node], arr[i]
+        if i != curr_node:
+            arr[i], arr[curr_node] = arr[curr_node], arr[i]
             self._heapify_helper(i, n, arr)
 
     def deleteAt(self, idx):
