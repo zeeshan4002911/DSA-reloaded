@@ -77,7 +77,7 @@ def main():
     arr = [int(val) for val in arr]
 
     soln = Solution()
-    soln.heap_sort(arr)
+    soln.heap_sort_inplace(arr)
     print(arr)
 
 
