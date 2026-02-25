@@ -28,20 +28,57 @@ import heapq
 
 
 class Solution:
+    def heap_sort_inplace(self, arr):
+        n = len(arr)
+        # Converting parameter arr to max heap
+        for i in range(n // 2 - 1, -1, -1):
+            self.sift_down(i, arr, n)
+
+        while n > 0:
+            # Swapping the root with the last element
+            arr[0], arr[n - 1] = arr[n - 1], arr[0]
+            
+            # Excluding the last element, to act as a storage for sorted portion
+            n -= 1
+            
+            # Bubbling down the root to place it at it's rigth position in heap
+            self.sift_down(0, arr, n)
+
+        return arr
+
+    # Same as heapify method of heap_helper.py
+    def sift_down(self, i, arr, n):
+        curr_node = i
+        left_child = 2 * i + 1
+        right_child = 2 * i + 2
+
+        if left_child < n and arr[curr_node] < arr[left_child]:
+            curr_node = left_child
+        if right_child < n and arr[curr_node] < arr[right_child]:
+            curr_node = right_child
+
+        if i != curr_node:
+            arr[i], arr[curr_node] = arr[curr_node], arr[i]
+            self.sift_down(curr_node, arr, n)
+
     def heap_sort(self, arr):
         # Python heapq converts list into min-heap by default
         heapq.heapify(arr)
 
+        result = []
         while arr:
-            print(heapq.heappop(arr), end=" ")
+            result.append(heapq.heappop(arr))
+
+        arr[:] = result
 
 
 def main():
-    arr = input("Enter array: ").strip().split()
-    arr = [int(val.split(",")[0]) for val in arr]
+    arr = input("Enter array: ").strip().replace(',', ' ').split()
+    arr = [int(val) for val in arr]
 
     soln = Solution()
     soln.heap_sort(arr)
+    print(arr)
 
 
 if __name__ == "__main__":
