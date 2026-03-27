@@ -80,6 +80,42 @@ class Solution:
             adj_lst[u].append(v)
         return adj_lst
 
+    def directed_graph_cycle_rec(self, v, edge_lst):
+        adj_lst = self.convert_edge_to_adj_list(v, edge_lst)
+        visited = [0] * v
+        recStack = [0] * v
+
+        for i in range(v):
+            if i not in visited:
+                res = self.directed_graph_cycle_rec_helper(i, visited, recStack, adj_lst)
+                if res is True:
+                    return True
+
+        return False
+
+    def directed_graph_cycle_rec_helper(self, curr, visited, recStack, adj_lst):
+        # Found: In case if current node is already in recursive stack
+        if recStack[curr]:
+            return True
+
+        # In case if current node is already visited
+        if visited[curr]:
+            return False
+
+        visited[curr] = True
+        recStack[curr] = True
+
+        neighbours = adj_lst[curr]
+        for neighbour in neighbours:
+            res = self.directed_graph_cycle_rec_helper(
+                neighbour, visited, recStack, adj_lst
+            )
+            if res is True:
+                return True
+
+        recStack[curr] = False
+        return False
+
 
 def main():
     vertices = int(input("Enter number of vertex: ").strip())
