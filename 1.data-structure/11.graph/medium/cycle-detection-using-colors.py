@@ -64,12 +64,66 @@ class Solution:
 
         return False
 
-    def convert_edge_to_adj_list(self, v, edge_lst):
+    def undirected_graph_cycle(self, v, edge_lst):
+        adj_lst = self.convert_edge_to_adj_list(v, edge_lst, True)
+
+        """
+        0: white/unvisited
+        1: gray/currently in recursive stack
+        2: black/visted (processing finished)
+        """
+        colors_lst = [0] * v
+        stack = deque()
+
+        # For processing each vertex
+        for i in range(v):
+            if colors_lst[i] == 0:
+                stack.append((i, False, float("inf")))
+
+                # DFS For each vertex
+                while stack:
+                    curr, is_processed, parent = stack.pop()
+
+                    if is_processed:
+                        # Once the dfs for current path is done removing from recStack
+                        colors_lst[curr] = 2
+                        continue
+
+                    if colors_lst[curr] == 1:
+                        # Found: In case if for a current dfs same node gets reached
+                        return True
+
+                    if colors_lst[curr] == 2:
+                        continue
+
+                    # Marking for processing start
+                    colors_lst[curr] = 1
+
+                    # Adding processed marker to mark the end of dfs for curr node
+                    stack.append((curr, True, parent))
+
+                    neighbours = adj_lst[curr]
+                    size = len(neighbours)
+                    for i in range(size - 1, -1, -1):
+                        # Condition to skip the processing for undirected graph (current to parent link)
+                        if neighbours[i] == parent:
+                            continue
+
+                        if colors_lst[neighbours[i]] != 2:
+                            stack.append((neighbours[i], False, curr))
+
+        return False
+
+    def convert_edge_to_adj_list(self, v, edge_lst, undirected=False):
         adj_lst = [[] for _ in range(v)]
         for edge in edge_lst:
             u = edge[0]
             v = edge[1]
             adj_lst[u].append(v)
+
+            # For undirected graph adjacency list
+            if undirected:
+                adj_lst[v].append(u)
         return adj_lst
 
 
