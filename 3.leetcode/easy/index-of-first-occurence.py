@@ -28,6 +28,33 @@ from collections import deque
 
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
+        needle_size = len(needle)
+        haystack_size = len(haystack)
+        if needle_size > haystack_size:
+            return -1
+
+        i, j = 0, 0
+        while i < haystack_size:
+            if haystack[i] == needle[j]:
+                j += 1
+                if j == needle_size:
+                    return i - (j - 1)
+            else:
+                if j > 0:
+                    """
+                    On partial matching, going back to the size of needle matched till now
+                    to start matching again from next haystack element
+                    Example: haystack: "mississippi" and needle: "issip"
+                    """
+                    i -= j
+
+                j = 0
+
+            i += 1
+
+        return -1
+
+    def strStr2(self, haystack: str, needle: str) -> int:
         window_size = len(needle)
         size = len(haystack)
         if window_size > size:
@@ -46,6 +73,7 @@ class Solution:
             queue.popleft()
             queue.append(haystack[i])
 
+            # TC: O(N) to join the queue to create string
             if "".join(list(queue)) == needle:
                 return i - (window_size - 1)
 
