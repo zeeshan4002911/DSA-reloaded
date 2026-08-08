@@ -54,9 +54,9 @@ class Solution:
         self,
         v: int,
         adj_lst: list[list[int]],
-        visit_state: list[bool],
+        visit_state: list[int],
         result_st: deque[int],
-    ) -> list[int]:
+    ) -> None:
         st = deque()
         st.append((v, False))
 
@@ -104,7 +104,7 @@ class Solution:
             result.append(result_st.pop())
         return result
 
-    def topoSort_dfs_rec(self, v, adj_lst, visited, result_st) -> list[int]:
+    def topoSort_dfs_rec(self, v, adj_lst, visited, result_st) -> None:
         if visited[v] == 1:
             return
 
