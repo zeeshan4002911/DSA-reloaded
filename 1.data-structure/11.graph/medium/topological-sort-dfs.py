@@ -86,6 +86,40 @@ class Solution:
 
         return
 
+    def topoSort_rec(self, V: int, edges: list[list[int]]) -> list[int]:
+        visited = [0 for _ in range(V)]
+        adj_lst = self._convert_edges_to_adj(V, edges)
+        n = len(adj_lst)
+        # Stack used for marking all neighbour visits
+        result_st = deque()
+
+        # For traversing each node of graph
+        for i in range(n):
+            if visited[i] == 0:
+                self.topoSort_dfs_rec(i, adj_lst, visited, result_st)
+
+        # Topological order is reverse of stack
+        result = []
+        while result_st:
+            result.append(result_st.pop())
+        return result
+
+    def topoSort_dfs_rec(self, v, adj_lst, visited, result_st) -> list[int]:
+        if visited[v] == 1:
+            return
+
+        # Marking visited
+        visited[v] = 1
+
+        neighbours = adj_lst[v]
+        for neighbour in neighbours:
+            if visited[neighbour] == 0:
+                self.topoSort_dfs_rec(neighbour, adj_lst, visited, result_st)
+
+        # Add to stack after visiting all it's neighbours
+        result_st.append(v)
+        return
+
     def _convert_edges_to_adj(self, v: int, edges: list[list[int]]) -> list[list[int]]:
         adj_lst = [[] for _ in range(v)]
         for edge in edges:
@@ -107,7 +141,7 @@ def main():
         edge_lst.append(inp)
         i -= 1
 
-    res = Solution().topoSort(v, edge_lst)
+    res = Solution().topoSort_rec(v, edge_lst)
     print(res)
     return
 
