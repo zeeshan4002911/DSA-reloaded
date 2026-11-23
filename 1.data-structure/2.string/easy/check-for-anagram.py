@@ -52,6 +52,22 @@ class Solution:
                 return False
         return True
 
+    def check_for_anagram_hash_map(self, s: str, t: str) -> bool:
+        s_size, t_size = len(s), len(t)
+        if s_size != t_size:
+            return False
+        
+        hash_map = {}
+        for i in range(s_size):
+            hash_map[s[i]] = hash_map.get(s[i], 0) + 1
+            hash_map[t[i]] = hash_map.get(t[i], 0) - 1
+        
+        # Checking both string match for number and character
+        for k, v in hash_map.items():
+            if v != 0:
+                return False
+        return True
+
 
 def main():
     s1 = input("Enter the s1: ")
