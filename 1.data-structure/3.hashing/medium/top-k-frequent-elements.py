@@ -48,9 +48,11 @@ class Solution:
         # Count for all the numbers frequency
         count_arr = Counter(nums)
 
-        # max heap by adding -ve to freq
+        # Min heap with k elements instead max heap with all nums
         for num, freq in count_arr.items():
-            heapq.heappush(freq_heap, (-freq, num))
+            heapq.heappush(freq_heap, (freq, num))
+            if len(freq_heap) > k:
+                heapq.heappushpop(freq_heap)
 
         for i in range(k):
             num = heapq.heappop(freq_heap)[1]
@@ -61,7 +63,7 @@ class Solution:
 
 def main():
     nums = input("Enter the nums: ").strip().replace(",", " ").split()
-    nums = map(int, nums)
+    nums = list(map(int, nums))
     k = int(input("Enter k: "))
     print(Solution().top_k_frequent(nums, k))
 
