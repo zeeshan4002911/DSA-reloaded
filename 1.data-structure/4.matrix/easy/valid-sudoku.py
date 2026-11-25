@@ -54,8 +54,49 @@ Time Complexity: O(n^2)
 Auxiliary Space: O(1)
 """
 
+from typing import List
+
 
 class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        # Row check
+        for i in range(9):
+            seen_set = set()
+            for j in range(9):
+                if board[i][j] == '.': continue
+                if board[i][j] in seen_set or 1 < int(board[i][j]) > 9:
+                    return False
+                seen_set.add(board[i][j])
+
+        # Column check
+        for i in range(9):
+            seen_set = set()
+            for j in range(9):
+                if board[j][i] == '.': continue
+                if board[j][i] in seen_set or 1 < int(board[j][i]) > 9:
+                    return False
+                seen_set.add(board[j][i])
+
+        # Sub-boxes Check
+        sub_boxes = [
+            (0, 0), (0, 1), (0, 2),
+            (1, 0), (1, 1), (1, 2),
+            (2, 0), (2, 1), (2, 2)
+        ]
+        for box in sub_boxes:
+            x, y = box
+            seen_set = set()
+            for i in range(3):
+                for j in range(3):
+                    num = board[i + x * 3][j + y * 3]
+                    if num == '.': continue
+                    if num in seen_set or 1 < int(num) > 9:
+                        return False
+                    seen_set.add(num)
+        
+        return True
+
+
     def is_sudoku_valid(self, mat):
         # Fixed Array for storing the count of chunk/sub matrix number occurrence of sudoku
         row_mark_arr = [0] * 9
