@@ -33,6 +33,24 @@ Follow up: Can you solve the problem in O(1) extra space complexity? (The output
 
 class Solution:
     def product_except_self(self, nums: list[int]) -> list[int]:
+        size = len(nums)
+        res = [1] * size
+
+        # Prefix product calc iteration
+        prefix = 1
+        for i in range(size):
+            res[i] = prefix
+            prefix *= nums[i]
+
+        # Suffix product calc interation
+        postfix = 1
+        for i in range(size - 1, -1, -1):
+            res[i] *= postfix
+            postfix *= nums[i]
+
+        return res
+
+    def product_except_self_old(self, nums: list[int]) -> list[int]:
         result = []
         zero_count = 0
         product = 1
