@@ -40,8 +40,31 @@ from collections import Counter
 
 
 class Solution:
-    # TC: O(nlogn) - due to heap operation, SC: O(n)
+    # TC: O(n), SC: O(n)
     def top_k_frequent(self, nums: list[int], k: int) -> list[int]:
+        result = []
+        count_hashmap = {}
+
+        for num in nums:
+            count_hashmap[num] = count_hashmap.get(num, 0) + 1
+
+        # Maximum any number can be present in all the place of nums, index store frequency and value store number
+        freq_arr = [[] for _ in range(len(nums) + 1)]
+        for key, value in count_hashmap.items():
+            freq_arr[value].append(key)
+
+        item = 0
+        for i in range(len(freq_arr) - 1, -1, -1):
+            for ele in freq_arr[i]:
+                result.append(ele)
+                item += 1
+                if item == k:
+                    return result
+
+        return result
+
+    # TC: O(nlogn) - due to heap operation, SC: O(n)
+    def top_k_frequent_heap(self, nums: list[int], k: int) -> list[int]:
         result = []
         freq_heap = []
 
